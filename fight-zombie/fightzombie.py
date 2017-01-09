@@ -28,7 +28,8 @@ def parse_spell(spell):
 
 def get_score_count(number, sides, target):
     """
-    count number of ways to get a score
+    count number of ways to get at least target
+    score
     """
     total = 0
     maxscore = number * sides
@@ -44,6 +45,7 @@ def get_score_count(number, sides, target):
             for side in xrange(1, min(maxscore + 1, sides + 1)):
                 table[dice][_score] += table[dice - 1][_score - side]
 
+    #sum of ways to get score in [target, maxscore] with given dice
     for i in xrange(target, maxscore + 1):
         total += table[number][i]
 
