@@ -50,15 +50,13 @@ def get_score_count(number, sides, target):
         but can be less if required maxscore is of low value
         """
         for _score in xrange(1, min(maxscore + 1, dice * sides + 1)):
-            """
-            count only sides which contribute to maximum possible score
-            """
-            for side in xrange(1, min(maxscore + 1, sides + 1)):
+            # count only sides which contribute to _score
+            for side in xrange(1, min(_score + 1, sides + 1)):
                 table[dice][_score] += table[dice - 1][_score - side]
 
     #sum of ways to get score in [target, maxscore] with given dice
-    for i in xrange(target, maxscore + 1):
-        total += table[number][i]
+    for score in xrange(target, maxscore + 1):
+        total += table[number][score]
 
     return total
 
