@@ -35,13 +35,24 @@ def get_score_count(number, sides, target):
     maxscore = number * sides
     table = [[0] * (maxscore + 1) for _ in xrange(number + 1)]
 
-    #fill table for first dice roll
+    """
+    fill table for first dice roll
+    min() == maxscore iff maxscore < sides
+    otherwise loop mostly runs for @sides times
+    """
     for i in xrange(1, min(maxscore + 1, sides + 1)):
         table[1][i] = 1
 
     #fill table for rest of entries in table
     for dice in xrange(2, number + 1):
-        for _score in xrange(1, maxscore + 1):
+        """
+        max score with 'dice' rolls = dice * sides
+        but can be less if required maxscore is of low value
+        """
+        for _score in xrange(1, min(maxscore + 1, dice * sides + 1)):
+            """
+            count only sides which contribute to maximum possible score
+            """
             for side in xrange(1, min(maxscore + 1, sides + 1)):
                 table[dice][_score] += table[dice - 1][_score - side]
 
